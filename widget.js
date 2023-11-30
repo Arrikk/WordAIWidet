@@ -1,3 +1,7 @@
+  const messages = [
+    { user: "User", text: "Hello!" },
+    { user: "Bot", text: "Hi there! How can I help you?" },
+  ];
 const isDisplayed = () => {
   // Create a button element
   const chatButton = document.createElement("button");
@@ -37,10 +41,10 @@ const isDisplayed = () => {
   chatWidget.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)"; // Added soft shadow
 
   // Sample messages array
-  const messages = [
-    { user: "User", text: "Hello!" },
-    { user: "Bot", text: "Hi there! How can I help you?" },
-  ];
+  // const messages = [
+  //   { user: "User", text: "Hello!" },
+  //   { user: "Bot", text: "Hi there! How can I help you?" },
+  // ];
 
   // Set up the chat widget content (you can customize this part)
   chatWidget.innerHTML = `
