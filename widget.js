@@ -2,6 +2,8 @@
 const chatButton = document.createElement("button");
 chatButton.innerHTML = "<i class='fas fa-robot'></i>";
 // Set styles for the button
+
+chatButton.style.display = "block !important"
 chatButton.style.position = "fixed";
 chatButton.style.bottom = "20px";
 chatButton.style.right = "20px";
@@ -15,7 +17,7 @@ chatButton.style.padding = "10px";
 chatButton.style.cursor = "pointer";
 chatButton.style.fontSize = "20px"
 chatButton.style.boxShadow = "rgb(110 104 104 / 38%) 0px 4px 10px"
-// chatButton.style.zIndex= "800"
+chatButton.style.zIndex= "1000"
 
 // Append the button to the body
 document.body.appendChild(chatButton);
@@ -30,7 +32,7 @@ chatWidget.style.width = "300px";
 chatWidget.style.height = "400px"; // Increased height
 chatWidget.style.border = "1px solid #ccc";
 chatWidget.style.backgroundColor = "#fff";
-chatWidget.style.zIndex = "999";
+chatWidget.style.zIndex = "1005";
 chatWidget.style.margin = "10px"; // Added margin
 chatWidget.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)"; // Added soft shadow
 
