@@ -101,7 +101,7 @@ function displayMessages(messages) {
       message.user === "User" ? "#3498db" : "#f1f1f1";
     messageDiv.style.color = message.user === "User" ? "#fff" : "#333";
     messageDiv.style.marginBottom = "8px";
-    messageDiv.style.maxWidth = "70%";
+    messageDiv.style.maxWidth = "85%";
     messageDiv.style.wordWrap = "break-word";
     messageDiv.style.alignSelf =
       message.user === "User" ? "flex-end" : "flex-start";
