@@ -15,6 +15,7 @@ chatButton.style.padding = "10px";
 chatButton.style.cursor = "pointer";
 chatButton.style.fontSize = "20px"
 chatButton.style.boxShadow = "rgb(110 104 104 / 38%) 0px 4px 10px"
+chatButton.style.zIndex= "1000"
 
 // Append the button to the body
 document.body.appendChild(chatButton);
