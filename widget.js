@@ -1,4 +1,4 @@
- const isDisplayed = () => {
+const isDisplayed = () => {
   // Create a button element
   const chatButton = document.createElement("button");
   chatButton.innerHTML = "<i class='fas fa-robot'></i>";
@@ -17,7 +17,7 @@
   chatButton.style.cursor = "pointer";
   chatButton.style.fontSize = "20px";
   chatButton.style.boxShadow = "rgb(110 104 104 / 38%) 0px 4px 10px";
-  chatButton.id = "wordAiLobittoChatButtonWidget"
+  chatButton.id = "wordAiLobittoChatButtonWidget";
 
   // Append the button to the body
   document.body.appendChild(chatButton);
@@ -42,39 +42,6 @@
     { user: "Bot", text: "Hi there! How can I help you?" },
   ];
 
-  // Function to display messages in the chat widget
-  function displayMessages() {
-    const chatBody = document.getElementById("chatBody");
-    chatBody.innerHTML = "";
-
-    messages.forEach((message) => {
-      const messageDiv = document.createElement("div");
-      messageDiv.textContent = `${message.text}`;
-      const iconClass =
-        message.user === "User" ? "fas fa-user" : "fas fa-robot";
-      //     messageDiv.innerHTML = `
-      //     <i class="${iconClass}"></i>
-      //     <span>${message.text}</span>
-      //   `;
-      messageDiv.style.padding = "8px";
-      messageDiv.style.borderRadius =
-        message.user === "User" ? "5px 5px 5px 0" : "5px 5px 0 5px";
-      messageDiv.style.backgroundColor =
-        message.user === "User" ? "#3498db" : "#f1f1f1";
-      messageDiv.style.color = message.user === "User" ? "#fff" : "#333";
-      messageDiv.style.marginBottom = "8px";
-      messageDiv.style.maxWidth = "70%";
-      messageDiv.style.wordWrap = "break-word";
-      messageDiv.style.alignSelf =
-        message.user === "User" ? "flex-end" : "flex-start";
-
-      chatBody.appendChild(messageDiv);
-    });
-
-    // Scroll to the bottom to show the latest message
-    chatBody.scrollTop = chatBody.scrollHeight;
-  }
-
   // Set up the chat widget content (you can customize this part)
   chatWidget.innerHTML = `
     <div style="background-color: #3498db; color: #fff; padding: 10px; border-bottom: 1px solid #ccc; display: flex; justify-content: space-between; align-items: center;">
@@ -94,73 +61,8 @@
   // Append the chat widget to the body
   document.body.appendChild(chatWidget);
 
-  // Function to send a new message
-  async function sendMessage() {
-    const messageInput = document.getElementById("messageInput");
-    const userMessage = messageInput.value.trim();
-
-    if (userMessage !== "") {
-      // Disable the send button while making the API call
-      const sendButton = document.getElementById("sendButton");
-      sendButton.disabled = true;
-      sendButton.style.backgroundColor = "#d8d8d8";
-      sendButton.style.color = "#333";
-      sendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; // Loading spinner icon
-
-      // Simulate an API call (replace with your actual API endpoint)
-      try {
-        const response = await fetch(
-          "https://word-ai-lovat.vercel.app/api/v3/model/chat",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              question: userMessage,
-              newChat: false,
-              conversationID: "NothAvailable",
-            }),
-          }
-        );
-
-        if (response.ok) {
-          // Successfully sent message
-          const botMessage = await response.json();
-          console.log(botMessage);
-          messages.push({ user: "User", text: userMessage });
-          messages.push({ user: "Bot", text: botMessage?.data?.answer });
-
-          // Display messages
-          displayMessages();
-        } else {
-          // Handle API error
-          console.error("Error sending message:", response.status);
-        }
-      } catch (error) {
-        // Handle network or other errors
-        console.error("Error:", error);
-      } finally {
-        // Enable the send button after the API call is complete
-        sendButton.disabled = false;
-        sendButton.style.backgroundColor = "#3498db";
-        sendButton.style.color = "#fff";
-        sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>'; // Revert to paper plane icon
-
-        //   isLoading = false; // Reset loading state
-
-        // Clear the input field
-        messageInput.value = "";
-      }
-    }
-  }
-
   // Display initial messages
-  displayMessages();
-
-  function changeBorderStyle(element) {
-    element.style.outline = "none";
-  }
+  displayMessages(messages);
 
   // Show/hide the chat widget when the button is clicked
   chatButton.addEventListener("click", () => {
@@ -169,19 +71,112 @@
   });
 
   // Function to close the chat widget
-  function closeChat() {
-    chatWidget.style.display = "none";
-  }
 };
 
-isDisplayed()
+function changeBorderStyle(element) {
+  element.style.outline = "none";
+}
+
+// Function to display messages in the chat widget
+function displayMessages(messages) {
+  const chatBody = document.getElementById("chatBody");
+  chatBody.innerHTML = "";
+
+  messages.forEach((message) => {
+    const messageDiv = document.createElement("div");
+    messageDiv.textContent = `${message.text}`;
+    const iconClass = message.user === "User" ? "fas fa-user" : "fas fa-robot";
+    //     messageDiv.innerHTML = `
+    //     <i class="${iconClass}"></i>
+    //     <span>${message.text}</span>
+    //   `;
+    messageDiv.style.padding = "8px";
+    messageDiv.style.borderRadius =
+      message.user === "User" ? "5px 5px 5px 0" : "5px 5px 0 5px";
+    messageDiv.style.backgroundColor =
+      message.user === "User" ? "#3498db" : "#f1f1f1";
+    messageDiv.style.color = message.user === "User" ? "#fff" : "#333";
+    messageDiv.style.marginBottom = "8px";
+    messageDiv.style.maxWidth = "70%";
+    messageDiv.style.wordWrap = "break-word";
+    messageDiv.style.alignSelf =
+      message.user === "User" ? "flex-end" : "flex-start";
+
+    chatBody.appendChild(messageDiv);
+  });
+
+  // Scroll to the bottom to show the latest message
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function closeChat() {
+  chatWidget.style.display = "none";
+}
+
+// Function to send a new message
+async function sendMessage() {
+  const messageInput = document.getElementById("messageInput");
+  const userMessage = messageInput.value.trim();
+
+  if (userMessage !== "") {
+    // Disable the send button while making the API call
+    const sendButton = document.getElementById("sendButton");
+    sendButton.disabled = true;
+    sendButton.style.backgroundColor = "#d8d8d8";
+    sendButton.style.color = "#333";
+    sendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; // Loading spinner icon
+
+    // Simulate an API call (replace with your actual API endpoint)
+    try {
+      const response = await fetch("https://word-ai-lovat.vercel.app/api/v3/model/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          question: userMessage,
+          newChat: false,
+          conversationID: "NothAvailable",
+        }),
+      });
+
+      if (response.ok) {
+        // Successfully sent message
+        const botMessage = await response.json();
+        console.log(botMessage);
+        messages.push({ user: "User", text: userMessage });
+        messages.push({ user: "Bot", text: botMessage?.data?.answer });
+
+        // Display messages
+        displayMessages(messages);
+      } else {
+        // Handle API error
+        console.error("Error sending message:", response.status);
+      }
+    } catch (error) {
+      // Handle network or other errors
+      console.error("Error:", error);
+    } finally {
+      // Enable the send button after the API call is complete
+      sendButton.disabled = false;
+      sendButton.style.backgroundColor = "#3498db";
+      sendButton.style.color = "#fff";
+      sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>'; // Revert to paper plane icon
+
+      //   isLoading = false; // Reset loading state
+
+      // Clear the input field
+      messageInput.value = "";
+    }
+  }
+}
+
+isDisplayed();
 
 setInterval(() => {
-  console.log("Try again")
+  console.log("Try again");
   try {
-    let doc = document.getElementById("wordAiLobittoChatButtonWidget")
-    if(!doc) isDisplayed()
-  } catch (error) {
-  }
-}, 4000)
-
+    let doc = document.getElementById("wordAiLobittoChatButtonWidget");
+    if (!doc) isDisplayed();
+  } catch (error) {}
+}, 4000);
